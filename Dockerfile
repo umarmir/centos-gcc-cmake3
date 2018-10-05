@@ -52,8 +52,7 @@ RUN echo 'enabled=1' >> /etc/yum.repos.d/cmake3.repo
 RUN echo 'enabled_metadata=1' >> /etc/yum.repos.d/cmake3.repo
 RUN echo alias cmake='cmake3' >> /etc/profile.d/others.sh
 RUN yum install -y cmake3 
-# ENV cmake=cmake3
-RUN cmake --version
+ENV cmake=cmake3
                                           
 ########### Start ############                                      
 CMD ["/usr/sbin/sshd", "-D"]
