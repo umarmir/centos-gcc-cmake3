@@ -4,7 +4,7 @@ WORKDIR /
 ############ Installations ############                                                  
 RUN yum -y install bzip2 wget openssh-server passwd zlib* libtool which epel-release deltarpm    
 RUN yum groupinstall -y "Development Tools"                                     
-RUN yum -y update 
+RUN yum -y update  
 
 ########### Directries Needed ############
 ### For SSH
@@ -25,10 +25,11 @@ EXPOSE 22
 ########### g++ 5.3.1 ############
 RUN yum install -y centos-release-scl
 RUN yum install -y devtoolset-4-gcc*
-RUN mv /usr/bin/gcc /usr/bin/gccold && mv /usr/bin/g++ /usr/bin/g++old && mv /usr/bin/c++ /usr/bin/c++old
+RUN mv /usr/bin/gcc /usr/bin/gccold && mv /usr/bin/g++ /usr/bin/g++old && mv /usr/bin/c++ /usr/bin/c++old && mv /usr/bin/cpp /usr/bin/cppold
 RUN ln -s /opt/rh/devtoolset-4/root/usr/bin/gcc /usr/bin/gcc
 RUN ln -s /opt/rh/devtoolset-4/root/usr/bin/g++ /usr/bin/g++
 RUN ln -s /usr/bin/g++ /usr/bin/c++
+RUN ln -s /usr/bin/g++ /usr/bin/cpp
 RUN ln -s /opt/rh/devtoolset-4/root/usr/lib /usr/local/lib
 RUN ln -s /opt/rh/devtoolset-4/root/usr/lib64 /usr/local/lib64
 RUN gcc --version
@@ -50,6 +51,6 @@ RUN yum install -y cmake3
 ########### ENV ############
 ENV cmake=cmake3
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH    
-                                          
+
 ########### Start ############                                      
 CMD ["/usr/sbin/sshd", "-D"]
