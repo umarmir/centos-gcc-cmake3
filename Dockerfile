@@ -4,15 +4,9 @@ WORKDIR /
 ############ Installations ############                                                  
 RUN yum -y install bzip2 wget openssh-server passwd zlib* libtool which epel-release deltarpm    
 RUN yum groupinstall -y "Development Tools"                                     
-RUN yum -y update  
+RUN yum -y update 
 
-############ PHP 7.0.32 ############ 
-RUN yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-RUN yum-config-manager --enable remi-php70   [Install PHP 7.0]
-RUN yum install -y php php-mcrypt php-cli php-gd php-curl php-mysql php-ldap php-zip php-fileinfo 
-RUN php --version
-
-# ########### Directries Needed ############
+########### Directries Needed ############
 ### For SSH
 RUN mkdir /var/run/sshd
 
@@ -52,7 +46,10 @@ RUN echo 'enabled=1' >> /etc/yum.repos.d/cmake3.repo
 RUN echo 'enabled_metadata=1' >> /etc/yum.repos.d/cmake3.repo
 RUN echo alias cmake='cmake3' >> /etc/profile.d/others.sh
 RUN yum install -y cmake3 
+
+########### ENV ############
 ENV cmake=cmake3
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64:$LD_LIBRARY_PATH    
                                           
 ########### Start ############                                      
 CMD ["/usr/sbin/sshd", "-D"]
